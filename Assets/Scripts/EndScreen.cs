@@ -22,6 +22,7 @@ public class EndScreen : MonoBehaviour {
 
     void Quit()
     {
+        Application.Quit();
     }
 
     // Update is called once per frame
