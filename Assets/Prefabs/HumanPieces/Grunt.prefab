@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114413091515620060}
   m_Layer: 0
   m_Name: Grunt
-  m_TagString: Untagged
+  m_TagString: Piece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 65882067783845812}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Piece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

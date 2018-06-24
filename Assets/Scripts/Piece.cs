@@ -5,7 +5,7 @@ using System.Text;
 
 using UnityEngine;
 
-public class Piece
+public abstract class Piece
 {
     public int x;
     public int y;
@@ -14,6 +14,12 @@ public class Piece
     public int damage;
 
     public bool isSelected;
+    public enum Type
+    {
+        AI,
+        Human
+    }
+    public Type type;
 
     public MonoBehaviour monoBehaviour;
 
@@ -23,16 +29,34 @@ public class Piece
         isSelected = false;
     }
 
-    public virtual void Select()
+    public void Select()
     {
         if (!isSelected)
             monoBehaviour.transform.Translate(new Vector3(0.0f, 0.2f, 0.0f));
         isSelected = true;
     }
-    public virtual void Unselect()
+    public void Unselect()
     {
         if (isSelected)
             monoBehaviour.transform.Translate(new Vector3(0.0f, -0.2f, 0.0f));
         isSelected = false;
     }
+}
+
+public abstract class AIPiece : Piece
+{
+    public AIPiece(MonoBehaviour mb) : base(mb)
+    {
+        type = Type.AI;
+    }
+}
+
+public abstract class HumanPiece : Piece
+{
+    public HumanPiece(MonoBehaviour mb) : base(mb)
+    {
+        type = Type.Human;
+    }
+
+    public abstract void markPosibleMoves();
 }

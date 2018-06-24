@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public class CommandUnit : Piece
+public class CommandUnit : AIPiece
 {
     public CommandUnit(MonoBehaviour mb) : base(mb)
-    { }
+    {}
 }

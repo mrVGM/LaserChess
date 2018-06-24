@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public class Dreadnought : Piece
+public class Dreadnought : AIPiece
 {
     public Dreadnought(MonoBehaviour mb) : base(mb)
     { }

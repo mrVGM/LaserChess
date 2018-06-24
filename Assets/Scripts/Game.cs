@@ -4,16 +4,39 @@ using UnityEngine;
 
 public class Game : MonoBehaviour {
 
+    enum Turn
+    {
+        HumanTurn,
+        AITurn
+    }
+
+    enum State
+    {
+        SelectPiece,
+        Move,
+        Attack
+    }
+
     public static Game instance;
 
     public Tile[,] board;
     public Piece[,] pieces;
+
+    Turn turn;
+    State state;
+
+    HumanPiece currentlySelected;
 
 	// Use this for initialization
 	void Start () {
         board = new Tile[8, 8];
         pieces = new Piece[8, 8];
         instance = this;
+
+        turn = Turn.HumanTurn;
+        state = State.SelectPiece;
+
+        currentlySelected = null;
 	}
 
     Tile SelectedTile()
@@ -48,17 +71,24 @@ public class Game : MonoBehaviour {
         return null;
     }
 
+    void SelectPieceStage()
+    {
+        currentlySelected = SelectedPiece() as HumanPiece;
+        if (currentlySelected == null)
+            return;
+
+        currentlySelected.Select();
+        currentlySelected.markPosibleMoves();
+    }
+
     // Update is called once per frame
     void Update () {
-        Tile selected = SelectedTile();
-        Piece piece = SelectedPiece();
-        if (piece != null)
+        if (turn == Turn.AITurn)
+            return;
+
+        if (state == State.SelectPiece)
         {
-            piece.Select();
-        }
-        if (selected != null)
-        {
-            selected.Select();
+            SelectPieceStage();
         }
     }
 }
