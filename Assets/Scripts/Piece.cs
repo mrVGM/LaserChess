@@ -53,14 +53,12 @@ public abstract class Piece
         y = positionY;
     }
 
+    public abstract void Destroy();
     public void TakeDamage(int damage)
     {
         hitPoints -= damage;
         if (hitPoints <= 0)
-        {
-            Game.instance.pieces[x, y] = null;
-            MonoBehaviour.Destroy(monoBehaviour.gameObject);
-        }
+            Destroy();
     }
     public void Attack(List<Piece> pieces)
     {
@@ -71,17 +69,34 @@ public abstract class Piece
 
 public abstract class AIPiece : Piece
 {
+    public static HashSet<AIPiece> AIPieces = new HashSet<AIPiece>();
     public AIPiece(MonoBehaviour mb) : base(mb)
     {
         type = Type.AI;
+        AIPieces.Add(this);
+    }
+    public override void Destroy()
+    {
+        Game.instance.pieces[x, y] = null;
+        MonoBehaviour.Destroy(monoBehaviour.gameObject);
+        AIPieces.Remove(this);
     }
 }
 
 public abstract class HumanPiece : Piece
 {
+    public static HashSet<HumanPiece> HumanPieces = new HashSet<HumanPiece>();
     public HumanPiece(MonoBehaviour mb) : base(mb)
     {
         type = Type.Human;
+        HumanPieces.Add(this);
+    }
+
+    public override void Destroy()
+    {
+        Game.instance.pieces[x, y] = null;
+        MonoBehaviour.Destroy(monoBehaviour.gameObject);
+        HumanPieces.Remove(this);
     }
 
     public abstract void MarkPosibleMoves();
