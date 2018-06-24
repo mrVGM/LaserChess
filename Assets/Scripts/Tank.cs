@@ -104,64 +104,30 @@ public class Tank : HumanPiece
 
     public override List<Tile> GetPosibleMoves()
     {
-        int right = Math.Min(7 - x, 2);
-        int left = Math.Min(x, 2);
-        int up = Math.Min(7 - y, 2);
-        int down = Math.Min(y, 2);
-
         List<Tile> res = new List<Tile>();
 
-        for (int i = 0; i <= right; ++i)
+        for (int k = 0; k < 9; ++k)
         {
-            for (int j = 0; j <= up; ++j)
+            if (k == 4)
+                continue;
+            Vector2Int dir = new Vector2Int(k / 3, k % 3) - new Vector2Int(1,1);
+            Vector2Int curPosition = new Vector2Int(x, y);
+
+            try
             {
-                if (i == 0 && j == 0)
-                    continue;
-                if ((i == 2 || j == 2) && (i - j) % 2 != 0)
-                    continue;
-                if (Game.instance.pieces[x + i, y + j] == null)
-                    res.Add(Game.instance.board[x + i, y + j]);
+                for (int i = 0; i < 3; ++i)
+                {
+                    curPosition += dir;
+                    if (Game.instance.pieces[curPosition.x, curPosition.y] == null)
+                        res.Add(Game.instance.board[curPosition.x, curPosition.y]);
+                    else
+                        break;
+                }
             }
+            catch (Exception)
+            { }
         }
 
-        for (int i = 0; i <= left; ++i)
-        {
-            for (int j = 0; j <= up; ++j)
-            {
-                if (i == 0 && j == 0)
-                    continue;
-                if ((i == 2 || j == 2) && (i - j) % 2 != 0)
-                    continue;
-                if (Game.instance.pieces[x - i, y + j] == null)
-                    res.Add(Game.instance.board[x - i, y + j]);
-            }
-        }
-
-        for (int i = 0; i <= right; ++i)
-        {
-            for (int j = 0; j <= down; ++j)
-            {
-                if (i == 0 && j == 0)
-                    continue;
-                if ((i == 2 || j == 2) && (i - j) % 2 != 0)
-                    continue;
-                if (Game.instance.pieces[x + i, y - j] == null)
-                    res.Add(Game.instance.board[x + i, y - j]);
-            }
-        }
-
-        for (int i = 0; i <= left; ++i)
-        {
-            for (int j = 0; j <= down; ++j)
-            {
-                if (i == 0 && j == 0)
-                    continue;
-                if ((i == 2 || j == 2) && (i - j) % 2 != 0)
-                    continue;
-                if (Game.instance.pieces[x - i, y - j] == null)
-                    res.Add(Game.instance.board[x - i, y - j]);
-            }
-        }
         return res;
     }
 }
