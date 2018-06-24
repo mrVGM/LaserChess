@@ -71,16 +71,21 @@ public class Game : MonoBehaviour {
         return null;
     }
 
+    void SelectPieceStage(HumanPiece p)
+    {
+        p.Select();
+        p.markPosibleMoves();
+
+        state = State.Move;
+    }
+
     void SelectPieceStage()
     {
         currentlySelected = SelectedPiece() as HumanPiece;
         if (currentlySelected == null)
             return;
 
-        currentlySelected.Select();
-        currentlySelected.markPosibleMoves();
-
-        state = State.Move;
+        SelectPieceStage(currentlySelected);
     }
 
     void UnselectAllTiles()
@@ -97,13 +102,34 @@ public class Game : MonoBehaviour {
     void MoveStage()
     {
         HumanPiece tmp = SelectedPiece() as HumanPiece;
-        if (tmp != null && tmp == currentlySelected)
+        if (tmp != null)
         {
-            currentlySelected.Unselect();
-            currentlySelected = null;
-            UnselectAllTiles();
-            state = State.SelectPiece;
+            if (tmp == currentlySelected)
+            {
+                currentlySelected.Unselect();
+                currentlySelected = null;
+                UnselectAllTiles();
+                state = State.SelectPiece;
+            }
+            else
+            {
+                currentlySelected.Unselect();
+                currentlySelected = tmp;
+                UnselectAllTiles();
+                SelectPieceStage(tmp);
+            }
+            return;
         }
+        Tile tile = SelectedTile();
+        if (tile == null || !tile.isSelected)
+            return;
+
+        UnselectAllTiles();
+        currentlySelected.Move(tile.x, tile.y);
+
+        currentlySelected.Unselect();
+        currentlySelected = null;
+        state = State.SelectPiece;
     }
 
     // Update is called once per frame

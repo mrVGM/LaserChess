@@ -41,6 +41,17 @@ public abstract class Piece
             monoBehaviour.transform.Translate(new Vector3(0.0f, -0.2f, 0.0f));
         isSelected = false;
     }
+
+    public void Move(int positionX, int positionY)
+    {
+        Vector3 newPosition = new Vector3(positionX - 3.5f,0.0f,positionY - 3.5f);
+        monoBehaviour.transform.Translate(newPosition - monoBehaviour.transform.position);
+        
+        Game.instance.pieces[x, y] = null;
+        Game.instance.pieces[positionX, positionY] = this;
+        x = positionX;
+        y = positionY;
+    }
 }
 
 public abstract class AIPiece : Piece
