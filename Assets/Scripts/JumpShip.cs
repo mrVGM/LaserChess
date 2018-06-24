@@ -12,7 +12,24 @@ public class Jumpship : HumanPiece
         hitPoints = 2;
     }
 
-    public override void markPosibleMoves()
+    public override List<Piece> GetAttackPossibilities(out bool requireChoice)
+    {
+        requireChoice = false;
+        List<Piece> res = new List<Piece>();
+
+        if (x > 0 && Game.instance.pieces[x - 1, y] as AIPiece != null)
+            res.Add(Game.instance.pieces[x - 1, y]);
+        if (x < 7 && Game.instance.pieces[x + 1, y] as AIPiece != null)
+            res.Add(Game.instance.pieces[x + 1, y]);
+        if (y > 0 && Game.instance.pieces[x, y - 1] as AIPiece != null)
+            res.Add(Game.instance.pieces[x, y - 1]);
+        if (y < 7 && Game.instance.pieces[x, y + 1] as AIPiece != null)
+            res.Add(Game.instance.pieces[x, y + 1]);
+
+        return res;
+    }
+
+    public override void MarkPosibleMoves()
     {
         if (y - 2 >= 0)
         {

@@ -12,7 +12,97 @@ class Grunt : HumanPiece
         hitPoints = 2;
     }
 
-    public override void markPosibleMoves()
+    public override List<Piece> GetAttackPossibilities(out bool requireChoice)
+    {
+        List<Piece> res = new List<Piece>();
+
+        Vector2Int curPosition = new Vector2Int(x, y);
+        Vector2Int dir = new Vector2Int(1, 1);
+
+        try
+        {
+            AIPiece piece = null;
+            do
+            {
+                curPosition += dir;
+                piece = Game.instance.pieces[curPosition.x, curPosition.y] as AIPiece;
+                if (piece != null)
+                    res.Add(piece);
+
+            } while (piece == null);
+        }
+        catch (Exception)
+        {}
+
+        curPosition.x = x;
+        curPosition.y = y;
+        dir.x = 1;
+        dir.y = -1;
+
+        try
+        {
+            AIPiece piece = null;
+            do
+            {
+                curPosition += dir;
+                piece = Game.instance.pieces[curPosition.x, curPosition.y] as AIPiece;
+                if (piece != null)
+                    res.Add(piece);
+
+            } while (piece == null);
+        }
+        catch (Exception)
+        {}
+
+        curPosition.x = x;
+        curPosition.y = y;
+        dir.x = -1;
+        dir.y = -1;
+
+        try
+        {
+            AIPiece piece = null;
+            do
+            {
+                curPosition += dir;
+                piece = Game.instance.pieces[curPosition.x, curPosition.y] as AIPiece;
+                if (piece != null)
+                    res.Add(piece);
+
+            } while (piece == null);
+        }
+        catch (Exception)
+        {}
+
+        curPosition.x = x;
+        curPosition.y = y;
+        dir.x = -1;
+        dir.y = 1;
+
+        try
+        {
+            AIPiece piece = null;
+            do
+            {
+                curPosition += dir;
+                piece = Game.instance.pieces[curPosition.x, curPosition.y] as AIPiece;
+                if (piece != null)
+                    res.Add(piece);
+
+            } while (piece == null);
+        }
+        catch (Exception)
+        {}
+
+        if (res.Count > 1)
+            requireChoice = true;
+        else
+            requireChoice = false;
+
+        return res;
+    }
+
+    public override void MarkPosibleMoves()
     {
         if (x > 0 && Game.instance.pieces[x - 1,y] == null)
         {

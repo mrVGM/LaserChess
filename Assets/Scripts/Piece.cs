@@ -52,6 +52,16 @@ public abstract class Piece
         x = positionX;
         y = positionY;
     }
+
+    public void TakeDamage(int damage)
+    {
+        hitPoints -= damage;
+    }
+    public void Attack(List<Piece> pieces)
+    {
+        foreach (Piece p in pieces)
+            p.TakeDamage(damage);
+    }
 }
 
 public abstract class AIPiece : Piece
@@ -69,5 +79,6 @@ public abstract class HumanPiece : Piece
         type = Type.Human;
     }
 
-    public abstract void markPosibleMoves();
+    public abstract void MarkPosibleMoves();
+    public abstract List<Piece> GetAttackPossibilities(out bool requireChoice);
 }

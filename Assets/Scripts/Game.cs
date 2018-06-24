@@ -74,7 +74,7 @@ public class Game : MonoBehaviour {
     void SelectPieceStage(HumanPiece p)
     {
         p.Select();
-        p.markPosibleMoves();
+        p.MarkPosibleMoves();
 
         state = State.Move;
     }
@@ -125,8 +125,35 @@ public class Game : MonoBehaviour {
             return;
 
         UnselectAllTiles();
-        currentlySelected.Move(tile.x, tile.y);
+        currentlySelected.Unselect();
 
+        currentlySelected.Move(tile.x, tile.y);
+        
+        state = State.Attack;
+    }
+
+    void AttackStage()
+    {
+        bool requireChoice;
+        List<Piece> attackPosibilities = currentlySelected.GetAttackPossibilities(out requireChoice);
+
+        if (requireChoice)
+        {
+            foreach (Piece piece in attackPosibilities)
+                piece.Select();
+
+            AIPiece p = SelectedPiece() as AIPiece;
+            if (p == null || !p.isSelected)
+                return;
+
+            foreach (Piece piece in attackPosibilities)
+                piece.Unselect();
+
+            attackPosibilities.Clear();
+            attackPosibilities.Add(p);
+        }
+
+        currentlySelected.Attack(attackPosibilities);
         currentlySelected.Unselect();
         currentlySelected = null;
         state = State.SelectPiece;
@@ -145,6 +172,9 @@ public class Game : MonoBehaviour {
                 break;
             case State.Move:
                 MoveStage();
+                break;
+            case State.Attack:
+                AttackStage();
                 break;
         }
     }
