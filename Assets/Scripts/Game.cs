@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Game : MonoBehaviour {
@@ -39,6 +40,29 @@ public class Game : MonoBehaviour {
         state = State.SelectPiece;
 
         currentlySelected = null;
+
+        GameObject[] prefabs =
+        {
+            null,
+            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/HumanPieces/Grunt.prefab"),
+            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/HumanPieces/Jumpship.prefab"),
+            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/HumanPieces/Tank.prefab"),
+            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AIPieces/Drone.prefab"),
+            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AIPieces/Dreadnought.prefab"),
+            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AIPieces/CommandUnit.prefab"),
+        };
+
+        for (int i = 0; i < 8; ++i)
+        {
+            for (int j = 0; j < 8; ++j)
+            {
+                GameObject current = prefabs[GameSettings.level1Configuration[7 - i, j]];
+                if (current == null)
+                    continue;
+                GameObject tmp = Instantiate(current) as GameObject;
+                tmp.transform.Translate(new Vector3(j - 3.5f, 0.0f, i - 3.5f));
+            }
+        }
 	}
 
     Tile SelectedTile()
