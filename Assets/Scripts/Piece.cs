@@ -56,6 +56,11 @@ public abstract class Piece
     public void TakeDamage(int damage)
     {
         hitPoints -= damage;
+        if (hitPoints <= 0)
+        {
+            Game.instance.pieces[x, y] = null;
+            MonoBehaviour.Destroy(monoBehaviour.gameObject);
+        }
     }
     public void Attack(List<Piece> pieces)
     {
