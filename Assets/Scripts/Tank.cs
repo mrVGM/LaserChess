@@ -16,84 +16,33 @@ public class Tank : HumanPiece
     {
         List<Piece> res = new List<Piece>();
 
-        Vector2Int curPosition = new Vector2Int(x, y);
-        Vector2Int dir = new Vector2Int(0, 1);
-
-        try
+        Vector2Int[] directions =
         {
-            AIPiece piece = null;
-            do
-            {
-                curPosition += dir;
-                piece = Game.instance.pieces[curPosition.x, curPosition.y] as AIPiece;
-                if (piece != null)
-                    res.Add(piece);
+            new Vector2Int(0,1),
+            new Vector2Int(0,-1),
+            new Vector2Int(1,0),
+            new Vector2Int(-1,0)
+        };
 
-            } while (piece == null);
-        }
-        catch (Exception)
-        { }
-
-        curPosition.x = x;
-        curPosition.y = y;
-        dir.x = 0;
-        dir.y = -1;
-
-        try
+        foreach (Vector2Int dir in directions)
         {
-            AIPiece piece = null;
-            do
+            Vector2Int curPosition = new Vector2Int(x, y);
+
+            try
             {
-                curPosition += dir;
-                piece = Game.instance.pieces[curPosition.x, curPosition.y] as AIPiece;
-                if (piece != null)
-                    res.Add(piece);
+                Piece piece = null;
+                do
+                {
+                    curPosition += dir;
+                    piece = Game.instance.pieces[curPosition.x, curPosition.y];
+                    if (piece != null && piece as AIPiece != null)
+                        res.Add(piece);
 
-            } while (piece == null);
+                } while (piece == null);
+            }
+            catch (Exception)
+            { }
         }
-        catch (Exception)
-        { }
-
-        curPosition.x = x;
-        curPosition.y = y;
-        dir.x = 1;
-        dir.y = 0;
-
-        try
-        {
-            AIPiece piece = null;
-            do
-            {
-                curPosition += dir;
-                piece = Game.instance.pieces[curPosition.x, curPosition.y] as AIPiece;
-                if (piece != null)
-                    res.Add(piece);
-
-            } while (piece == null);
-        }
-        catch (Exception)
-        { }
-
-        curPosition.x = x;
-        curPosition.y = y;
-        dir.x = -1;
-        dir.y = 0;
-
-        try
-        {
-            AIPiece piece = null;
-            do
-            {
-                curPosition += dir;
-                piece = Game.instance.pieces[curPosition.x, curPosition.y] as AIPiece;
-                if (piece != null)
-                    res.Add(piece);
-
-            } while (piece == null);
-        }
-        catch (Exception)
-        { }
-
         if (res.Count > 1)
             requireChoice = true;
         else
