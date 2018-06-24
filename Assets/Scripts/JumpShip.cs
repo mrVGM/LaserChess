@@ -29,42 +29,44 @@ public class Jumpship : HumanPiece
         return res;
     }
 
-    public override void MarkPosibleMoves()
+    public override List<Tile> GetPosibleMoves()
     {
+        List<Tile> res = new List<Tile>();
         if (y - 2 >= 0)
         {
             if (x - 1 >= 0 && Game.instance.pieces[x - 1, y - 2] == null)
-                Game.instance.board[x - 1, y - 2].Select();
+                res.Add(Game.instance.board[x - 1, y - 2]);
 
             if (x + 1 <= 7 && Game.instance.pieces[x + 1, y - 2] == null)
-                Game.instance.board[x + 1, y - 2].Select();
+                res.Add(Game.instance.board[x + 1, y - 2]);
         }
 
         if (y + 2 <= 7)
         {
             if (x - 1 >= 0 && Game.instance.pieces[x - 1, y + 2] == null)
-                Game.instance.board[x - 1, y + 2].Select();
+                res.Add(Game.instance.board[x - 1, y + 2]);
 
             if (x + 1 <= 7 && Game.instance.pieces[x + 1, y + 2] == null)
-                Game.instance.board[x + 1, y + 2].Select();
+                res.Add(Game.instance.board[x + 1, y + 2]);
         }
 
         if (x - 2 >= 0)
         {
             if (y - 1 >= 0 && Game.instance.pieces[x - 2, y - 1] == null)
-                Game.instance.board[x - 2, y - 1].Select();
+                res.Add(Game.instance.board[x - 2, y - 1]);
 
             if (y + 1 <= 7 && Game.instance.pieces[x - 2, y + 1] == null)
-                Game.instance.board[x - 2, y + 1].Select();
+                res.Add(Game.instance.board[x - 2, y + 1]);
         }
 
         if (x + 2 <= 7)
         {
             if (y - 1 >= 0 && Game.instance.pieces[x + 2, y - 1] == null)
-                Game.instance.board[x + 2, y - 1].Select();
+                res.Add(Game.instance.board[x + 2, y - 1]);
 
             if (y + 1 <= 7 && Game.instance.pieces[x + 2, y + 1] == null)
-                Game.instance.board[x + 2, y + 1].Select();
+                res.Add(Game.instance.board[x + 2, y + 1]);
         }
+        return res;
     }
 }

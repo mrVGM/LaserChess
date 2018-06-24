@@ -85,11 +85,13 @@ public abstract class AIPiece : Piece
 
 public abstract class HumanPiece : Piece
 {
+    public bool active;
     public static HashSet<HumanPiece> HumanPieces = new HashSet<HumanPiece>();
     public HumanPiece(MonoBehaviour mb) : base(mb)
     {
         type = Type.Human;
         HumanPieces.Add(this);
+        active = true;
     }
 
     public override void Destroy()
@@ -99,6 +101,20 @@ public abstract class HumanPiece : Piece
         HumanPieces.Remove(this);
     }
 
-    public abstract void MarkPosibleMoves();
+    public abstract List<Tile> GetPosibleMoves();
     public abstract List<Piece> GetAttackPossibilities(out bool requireChoice);
+    public static Dictionary<HumanPiece, List<Tile>> ActivePieces()
+    {
+        Dictionary<HumanPiece, List<Tile>> res = new Dictionary<HumanPiece, List<Tile>>();
+        foreach (HumanPiece hp in HumanPieces)
+        {
+            if (hp.active)
+            {
+                List<Tile> possibleMoves = hp.GetPosibleMoves();
+                if (possibleMoves.Count > 0)
+                    res.Add(hp, possibleMoves);
+            }
+        }
+        return res;
+    }
 }

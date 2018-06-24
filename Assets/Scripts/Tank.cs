@@ -102,12 +102,14 @@ public class Tank : HumanPiece
         return res;
     }
 
-    public override void MarkPosibleMoves()
+    public override List<Tile> GetPosibleMoves()
     {
         int right = Math.Min(7 - x, 2);
         int left = Math.Min(x, 2);
         int up = Math.Min(7 - y, 2);
         int down = Math.Min(y, 2);
+
+        List<Tile> res = new List<Tile>();
 
         for (int i = 0; i <= right; ++i)
         {
@@ -118,7 +120,7 @@ public class Tank : HumanPiece
                 if ((i == 2 || j == 2) && (i - j) % 2 != 0)
                     continue;
                 if (Game.instance.pieces[x + i, y + j] == null)
-                    Game.instance.board[x + i, y + j].Select();
+                    res.Add(Game.instance.board[x + i, y + j]);
             }
         }
 
@@ -131,7 +133,7 @@ public class Tank : HumanPiece
                 if ((i == 2 || j == 2) && (i - j) % 2 != 0)
                     continue;
                 if (Game.instance.pieces[x - i, y + j] == null)
-                    Game.instance.board[x - i, y + j].Select();
+                    res.Add(Game.instance.board[x - i, y + j]);
             }
         }
 
@@ -144,7 +146,7 @@ public class Tank : HumanPiece
                 if ((i == 2 || j == 2) && (i - j) % 2 != 0)
                     continue;
                 if (Game.instance.pieces[x + i, y - j] == null)
-                    Game.instance.board[x + i, y - j].Select();
+                    res.Add(Game.instance.board[x + i, y - j]);
             }
         }
 
@@ -157,8 +159,9 @@ public class Tank : HumanPiece
                 if ((i == 2 || j == 2) && (i - j) % 2 != 0)
                     continue;
                 if (Game.instance.pieces[x - i, y - j] == null)
-                    Game.instance.board[x - i, y - j].Select();
+                    res.Add(Game.instance.board[x - i, y - j]);
             }
         }
+        return res;
     }
 }

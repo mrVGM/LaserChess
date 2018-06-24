@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +15,8 @@ public class Game : MonoBehaviour {
     {
         SelectPiece,
         Move,
-        Attack
+        Attack,
+        EndTurn
     }
 
     public static Game instance;
@@ -71,21 +73,42 @@ public class Game : MonoBehaviour {
         return null;
     }
 
-    void SelectPieceStage(HumanPiece p)
+    void SelectPieceStage(HumanPiece piece = null)
     {
-        p.Select();
-        p.MarkPosibleMoves();
+        Dictionary<HumanPiece, List<Tile>> active = HumanPiece.ActivePieces();
+        if (active.Count == 0)
+        {
+            turn = Turn.AITurn;
+            return;
+        }
 
-        state = State.Move;
-    }
+        currentlySelected = piece;
+        if (currentlySelected == null)
+            currentlySelected = SelectedPiece() as HumanPiece;
 
-    void SelectPieceStage()
-    {
-        currentlySelected = SelectedPiece() as HumanPiece;
         if (currentlySelected == null)
             return;
 
-        SelectPieceStage(currentlySelected);
+        List<Tile> possibleMoves = null;
+        try
+        {
+            possibleMoves = active[currentlySelected];
+        }
+        catch(Exception)
+        { }
+
+        if (possibleMoves == null)
+        {
+            currentlySelected = null;
+            return;
+        }
+
+        currentlySelected.Select();
+
+        foreach (Tile t in possibleMoves)
+            t.Select();
+
+        state = State.Move;
     }
 
     void UnselectAllTiles()
@@ -101,6 +124,11 @@ public class Game : MonoBehaviour {
 
     void MoveStage()
     {
+        if (currentlySelected == null)
+        {
+            state = State.SelectPiece;
+            return;
+        }
         HumanPiece tmp = SelectedPiece() as HumanPiece;
         if (tmp != null)
         {
@@ -114,7 +142,7 @@ public class Game : MonoBehaviour {
             else
             {
                 currentlySelected.Unselect();
-                currentlySelected = tmp;
+                currentlySelected = null;
                 UnselectAllTiles();
                 SelectPieceStage(tmp);
             }
@@ -128,7 +156,8 @@ public class Game : MonoBehaviour {
         currentlySelected.Unselect();
 
         currentlySelected.Move(tile.x, tile.y);
-        
+        currentlySelected.active = false;
+
         state = State.Attack;
     }
 

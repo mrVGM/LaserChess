@@ -102,24 +102,26 @@ class Grunt : HumanPiece
         return res;
     }
 
-    public override void MarkPosibleMoves()
+    public override List<Tile> GetPosibleMoves()
     {
+        List<Tile> res = new List<Tile>();
         if (x > 0 && Game.instance.pieces[x - 1,y] == null)
         {
-            Game.instance.board[x - 1, y].Select();
+            res.Add(Game.instance.board[x - 1, y]);
         }
         if (x < 7 && Game.instance.pieces[x + 1, y] == null)
         {
-            Game.instance.board[x + 1, y].Select();
+            res.Add(Game.instance.board[x + 1, y]);
         }
         if (y > 0 && Game.instance.pieces[x, y - 1] == null)
         {
-            Game.instance.board[x, y - 1].Select();
+            res.Add(Game.instance.board[x, y - 1]);
         }
         if (y < 7 && Game.instance.pieces[x, y + 1] == null)
         {
-            Game.instance.board[x, y + 1].Select();
+            res.Add(Game.instance.board[x, y + 1]);
         }
+        return res;
     }
 }
 
