@@ -79,6 +79,31 @@ public class Game : MonoBehaviour {
 
         currentlySelected.Select();
         currentlySelected.markPosibleMoves();
+
+        state = State.Move;
+    }
+
+    void UnselectAllTiles()
+    {
+        for (int i = 0; i < 8; ++i)
+        {
+            for (int j = 0; j < 8; ++j)
+            {
+                board[i, j].UnSelect();
+            }
+        }
+    }
+
+    void MoveStage()
+    {
+        HumanPiece tmp = SelectedPiece() as HumanPiece;
+        if (tmp != null && tmp == currentlySelected)
+        {
+            currentlySelected.Unselect();
+            currentlySelected = null;
+            UnselectAllTiles();
+            state = State.SelectPiece;
+        }
     }
 
     // Update is called once per frame
@@ -86,9 +111,15 @@ public class Game : MonoBehaviour {
         if (turn == Turn.AITurn)
             return;
 
-        if (state == State.SelectPiece)
+        
+        switch (state)
         {
-            SelectPieceStage();
+            case State.SelectPiece:
+                SelectPieceStage();
+                break;
+            case State.Move:
+                MoveStage();
+                break;
         }
     }
 }
