@@ -7,5 +7,8 @@ using UnityEngine;
 public class Dreadnought : AIPiece
 {
     public Dreadnought(MonoBehaviour mb) : base(mb)
-    { }
+    {
+        damage = 2;
+        hitPoints = 5;
+    }
 }

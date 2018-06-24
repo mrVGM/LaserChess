@@ -7,7 +7,10 @@ using UnityEngine;
 class Grunt : HumanPiece
 {
     public Grunt(MonoBehaviour mb) : base(mb)
-    { }
+    {
+        damage = 1;
+        hitPoints = 2;
+    }
 
     public override void markPosibleMoves()
     {

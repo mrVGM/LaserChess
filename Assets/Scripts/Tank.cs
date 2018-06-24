@@ -7,7 +7,10 @@ using UnityEngine;
 public class Tank : HumanPiece
 {
     public Tank(MonoBehaviour mb) : base(mb)
-    { }
+    {
+        damage = 2;
+        hitPoints = 4;
+    }
 
     public override void markPosibleMoves()
     {

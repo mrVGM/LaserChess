@@ -7,7 +7,10 @@ using UnityEngine;
 public class Jumpship : HumanPiece
 {
     public Jumpship(MonoBehaviour mb) : base(mb)
-    { }
+    {
+        damage = 2;
+        hitPoints = 2;
+    }
 
     public override void markPosibleMoves()
     {
