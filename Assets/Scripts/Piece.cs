@@ -65,6 +65,10 @@ public abstract class Piece
         foreach (Piece p in pieces)
             p.TakeDamage(damage);
     }
+
+    public abstract List<Tile> GetPosibleMoves();
+    public abstract List<Piece> GetAttackPossibilities(out bool requireChoice);
+
 }
 
 public abstract class AIPiece : Piece
@@ -101,8 +105,6 @@ public abstract class HumanPiece : Piece
         HumanPieces.Remove(this);
     }
 
-    public abstract List<Tile> GetPosibleMoves();
-    public abstract List<Piece> GetAttackPossibilities(out bool requireChoice);
     public static Dictionary<HumanPiece, List<Tile>> ActivePieces()
     {
         Dictionary<HumanPiece, List<Tile>> res = new Dictionary<HumanPiece, List<Tile>>();
