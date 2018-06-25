@@ -80,7 +80,7 @@ public class Game : MonoBehaviour {
             }
         }
         inAnimation = false;
-	}
+    }
 
     Tile SelectedTile()
     {
@@ -307,8 +307,7 @@ public class Game : MonoBehaviour {
             AITurn();
             return;
         }
-
-        
+ 
         switch (state)
         {
             case State.SelectPiece:

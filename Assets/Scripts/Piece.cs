@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using UnityEditor;
 using UnityEngine;
 
 public abstract class Piece
@@ -69,8 +69,7 @@ public abstract class Piece
     }
     public void Attack(List<Piece> pieces)
     {
-        foreach (Piece p in pieces)
-            p.TakeDamage(damage);
+        LazerAnimation.lazerAnimation.Animate(this, pieces);
     }
 
     public abstract List<Tile> GetPosibleMoves();
