@@ -102,6 +102,7 @@ public class Game : MonoBehaviour {
         Dictionary<HumanPiece, List<Tile>> active = HumanPiece.ActivePieces();
         if (active.Count == 0)
         {
+            SetAIPiecesActive();
             turn = Turn.AITurn;
             return;
         }
@@ -212,10 +213,79 @@ public class Game : MonoBehaviour {
         state = State.SelectPiece;
     }
 
+    void AITurn()
+    {
+        bool inProgress = false;
+        do
+        {
+            inProgress = false;
+            foreach (Drone drone in Drone.Drones)
+            {
+                if (drone.MakeMoveAndAttack())
+                {
+                    inProgress = true;
+                    break;
+                }
+            }
+        }
+        while (inProgress);
+        
+        do
+        {
+            inProgress = false;
+            foreach (Dreadnought dreadnought in Dreadnought.Dreadnoughts)
+            {
+                if (dreadnought.MakeMoveAndAttack())
+                {
+                    inProgress = true;
+                    break;
+                }
+            }
+        }
+        while (inProgress);
+
+        do
+        {
+            inProgress = false;
+            foreach (CommandUnit commandUnit in CommandUnit.CommandUnits)
+            {
+                if (commandUnit.MakeMoveAndAttack())
+                {
+                    inProgress = true;
+                    break;
+                }
+            }
+        }
+        while (inProgress);
+
+        SetHumanPiecesActive();
+        turn = Turn.HumanTurn;
+        state = State.SelectPiece;
+    }
+
+    void SetAIPiecesActive()
+    {
+        foreach (Drone drone in Drone.Drones)
+            drone.active = true;
+        foreach (Dreadnought dreadnought in Dreadnought.Dreadnoughts)
+            dreadnought.active = true;
+        foreach (CommandUnit commandUnit in CommandUnit.CommandUnits)
+            commandUnit.active = true;
+    }
+
+    void SetHumanPiecesActive()
+    {
+        foreach (HumanPiece humanPiece in HumanPiece.HumanPieces)
+            humanPiece.active = true;
+    }
+
     // Update is called once per frame
     void Update () {
         if (turn == Turn.AITurn)
+        {
+            AITurn();
             return;
+        }
 
         
         switch (state)

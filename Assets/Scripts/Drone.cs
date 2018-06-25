@@ -6,10 +6,19 @@ using UnityEngine;
 
 public class Drone : AIPiece
 {
+    public static HashSet<Drone> Drones = new HashSet<Drone>();
     public Drone(MonoBehaviour mb) : base(mb)
     {
         damage = 1;
         hitPoints = 2;
+        Drones.Add(this);
+    }
+
+    public override void Destroy()
+    {
+        Game.instance.pieces[x, y] = null;
+        MonoBehaviour.Destroy(monoBehaviour.gameObject);
+        Drones.Remove(this);
     }
 
     public override List<Piece> GetAttackPossibilities(out bool requireChoice)
@@ -59,5 +68,29 @@ public class Drone : AIPiece
             res.Add(Game.instance.board[x, y + 1]);
         return res;
     }
-}
 
+    public override bool MakeMoveAndAttack()
+    {
+        if (!active)
+            return false;
+
+        List<Tile> moves = GetPosibleMoves();
+        if (moves.Count == 0)
+            return false;
+
+        Move(moves[0].x, moves[0].y);
+        active = false;
+
+        bool requireChoice;
+        List<Piece> attackPosibilities = GetAttackPossibilities(out requireChoice);
+
+        if (requireChoice)
+            throw new NotImplementedException();
+
+        if (attackPosibilities.Count == 1)
+        {
+            Attack(attackPosibilities);
+        }
+        return true;
+    }
+}

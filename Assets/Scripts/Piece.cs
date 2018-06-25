@@ -14,6 +14,9 @@ public abstract class Piece
     public int damage;
 
     public bool isSelected;
+
+    public bool active;
+
     public enum Type
     {
         AI,
@@ -27,6 +30,7 @@ public abstract class Piece
     {
         monoBehaviour = mb;
         isSelected = false;
+        active = true;
     }
 
     public void Select()
@@ -73,29 +77,20 @@ public abstract class Piece
 
 public abstract class AIPiece : Piece
 {
-    public static HashSet<AIPiece> AIPieces = new HashSet<AIPiece>();
     public AIPiece(MonoBehaviour mb) : base(mb)
     {
         type = Type.AI;
-        AIPieces.Add(this);
     }
-    public override void Destroy()
-    {
-        Game.instance.pieces[x, y] = null;
-        MonoBehaviour.Destroy(monoBehaviour.gameObject);
-        AIPieces.Remove(this);
-    }
+    public abstract bool MakeMoveAndAttack();
 }
 
 public abstract class HumanPiece : Piece
 {
-    public bool active;
     public static HashSet<HumanPiece> HumanPieces = new HashSet<HumanPiece>();
     public HumanPiece(MonoBehaviour mb) : base(mb)
     {
         type = Type.Human;
         HumanPieces.Add(this);
-        active = true;
     }
 
     public override void Destroy()
