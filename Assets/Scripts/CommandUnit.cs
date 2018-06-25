@@ -66,7 +66,8 @@ public class CommandUnit : AIPiece
             moves[0] = Game.instance.board[bestMove.x, bestMove.y];
         }
 
-        Move(moves[0].x, moves[0].y);
+        if (moves[0].x != x || moves[0].y != y)
+            Move(moves[0].x, moves[0].y);
         return true;
     }
 
@@ -77,13 +78,13 @@ public class CommandUnit : AIPiece
         Vector2Int myPos = new Vector2Int(x, y);
         Vector2Int enemyPosition = new Vector2Int(humanPiece.x, humanPiece.y);
 
-        Move(position.x, position.y);
+        Move(position.x, position.y, false);
 
         List<Tile> possibleMoves = humanPiece.GetPosibleMoves();
 
         foreach (Tile move in possibleMoves)
         {
-            humanPiece.Move(move.x, move.y);
+            humanPiece.Move(move.x, move.y, false);
             bool requireChoice;
             List<Piece> attacksPossibilities = humanPiece.GetAttackPossibilities(out requireChoice);
             if (attacksPossibilities.Contains(this))
@@ -93,8 +94,8 @@ public class CommandUnit : AIPiece
             }
         }
 
-        Move(myPos.x, myPos.y);
-        humanPiece.Move(enemyPosition.x, enemyPosition.y);
+        Move(myPos.x, myPos.y, false);
+        humanPiece.Move(enemyPosition.x, enemyPosition.y, false);
 
         return res;
     }

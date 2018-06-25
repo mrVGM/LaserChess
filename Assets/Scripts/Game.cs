@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class Game : MonoBehaviour {
 
@@ -30,8 +31,20 @@ public class Game : MonoBehaviour {
 
     Turn turn;
     State state;
+    public bool inAnimation;
 
     HumanPiece currentlySelected;
+
+    GameObject movementAnimator;
+    public GameObject MovementAnimator
+    {
+        get
+        {
+            if (movementAnimator == null)
+                movementAnimator = GameObject.Find("MovementAnimation");
+            return movementAnimator;
+        }
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -66,6 +79,7 @@ public class Game : MonoBehaviour {
                 tmp.transform.Translate(new Vector3(j - 3.5f, 0.0f, i - 3.5f));
             }
         }
+        inAnimation = false;
 	}
 
     Tile SelectedTile()
@@ -285,6 +299,9 @@ public class Game : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if (inAnimation)
+            return;
+
         if (turn == Turn.AITurn)
         {
             AITurn();

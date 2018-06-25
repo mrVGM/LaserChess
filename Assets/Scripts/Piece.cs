@@ -46,15 +46,18 @@ public abstract class Piece
         isSelected = false;
     }
 
-    public void Move(int positionX, int positionY)
-    {
-        Vector3 newPosition = new Vector3(positionX - 3.5f,0.0f,positionY - 3.5f);
-        monoBehaviour.transform.Translate(newPosition - monoBehaviour.transform.position);
-        
+    public void Move(int positionX, int positionY, bool animated = true)
+    {   
         Game.instance.pieces[x, y] = null;
         Game.instance.pieces[positionX, positionY] = this;
         x = positionX;
         y = positionY;
+
+        Vector3 newPosition = new Vector3(positionX - 3.5f, 0.0f, positionY - 3.5f);
+        if (animated)
+            MovementAnimation.movementAnimation.AnimateMove(this, monoBehaviour.transform.position, newPosition);
+        else
+            monoBehaviour.transform.position = newPosition;
     }
 
     public abstract void Destroy();

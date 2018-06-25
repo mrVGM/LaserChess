@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class GruntProxy : MonoBehaviour {
 
@@ -11,10 +12,11 @@ public class GruntProxy : MonoBehaviour {
         piece.y = System.Convert.ToInt32(transform.position.z + 3.5);
 
         Game.instance.pieces[piece.x, piece.y] = piece;
+
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+    // Update is called once per frame
+    void Update () {
+        
 	}
 }
