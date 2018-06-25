@@ -17,7 +17,10 @@ public class Game : MonoBehaviour {
         SelectPiece,
         Move,
         Attack,
-        EndTurn
+
+        DroneMovement,
+        DreadnoughtMovement,
+        CommandUnitMovement
     }
 
     public static Game instance;
@@ -104,6 +107,7 @@ public class Game : MonoBehaviour {
         {
             SetAIPiecesActive();
             turn = Turn.AITurn;
+            state = State.DroneMovement;
             return;
         }
 
@@ -216,51 +220,51 @@ public class Game : MonoBehaviour {
     void AITurn()
     {
         bool inProgress = false;
-        do
+        switch (state)
         {
-            inProgress = false;
-            foreach (Drone drone in Drone.Drones)
-            {
-                if (drone.MakeMoveAndAttack())
+            case State.DroneMovement:
+                foreach (Drone drone in Drone.Drones)
                 {
-                    inProgress = true;
-                    break;
+                    if (drone.MakeMoveAndAttack())
+                    {
+                        inProgress = true;
+                        break;
+                    }
                 }
-            }
-        }
-        while (inProgress);
-        
-        do
-        {
-            inProgress = false;
-            foreach (Dreadnought dreadnought in Dreadnought.Dreadnoughts)
-            {
-                if (dreadnought.MakeMoveAndAttack())
-                {
-                    inProgress = true;
-                    break;
-                }
-            }
-        }
-        while (inProgress);
+                if (!inProgress)
+                    state = State.DreadnoughtMovement;
+                break;
 
-        do
-        {
-            inProgress = false;
-            foreach (CommandUnit commandUnit in CommandUnit.CommandUnits)
-            {
-                if (commandUnit.MakeMoveAndAttack())
+            case State.DreadnoughtMovement:
+                foreach (Dreadnought dreadnought in Dreadnought.Dreadnoughts)
                 {
-                    inProgress = true;
-                    break;
+                    if (dreadnought.MakeMoveAndAttack())
+                    {
+                        inProgress = true;
+                        break;
+                    }
                 }
-            }
-        }
-        while (inProgress);
+                if (!inProgress)
+                    state = State.CommandUnitMovement;
+                break;
 
-        SetHumanPiecesActive();
-        turn = Turn.HumanTurn;
-        state = State.SelectPiece;
+            case State.CommandUnitMovement:
+                foreach (CommandUnit commandUnit in CommandUnit.CommandUnits)
+                {
+                    if (commandUnit.MakeMoveAndAttack())
+                    {
+                        inProgress = true;
+                        break;
+                    }
+                }
+                if (!inProgress)
+                {
+                    SetHumanPiecesActive();
+                    turn = Turn.HumanTurn;
+                    state = State.SelectPiece;
+                }
+                break;
+        }
     }
 
     void SetAIPiecesActive()

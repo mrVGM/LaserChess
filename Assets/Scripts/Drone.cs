@@ -64,8 +64,8 @@ public class Drone : AIPiece
     public override List<Tile> GetPosibleMoves()
     {
         List<Tile> res = new List<Tile>();
-        if (y < 7 && Game.instance.pieces[x, y + 1] == null)
-            res.Add(Game.instance.board[x, y + 1]);
+        if (y > 0 && Game.instance.pieces[x, y - 1] == null)
+            res.Add(Game.instance.board[x, y - 1]);
         return res;
     }
 
