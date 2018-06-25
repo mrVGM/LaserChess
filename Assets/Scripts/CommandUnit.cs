@@ -48,9 +48,62 @@ public class CommandUnit : AIPiece
 
         active = false;
         if (moves.Count > 1)
-            throw new NotImplementedException();
+        {
+            Vector2Int bestMove = new Vector2Int(x, y);
+            int minPossibleDamage = EstimateDamage(Game.instance.board[x, y]);
+
+            foreach (Tile move in moves)
+            {
+                int estimatedDamage = EstimateDamage(move);
+                if (estimatedDamage < minPossibleDamage)
+                {
+                    minPossibleDamage = estimatedDamage;
+                    bestMove.x = move.x;
+                    bestMove.y = move.y;
+                }
+            }
+
+            moves[0] = Game.instance.board[bestMove.x, bestMove.y];
+        }
 
         Move(moves[0].x, moves[0].y);
         return true;
+    }
+
+    int PossibleDamage(Tile position, HumanPiece humanPiece)
+    {
+        int res = 0;
+
+        Vector2Int myPos = new Vector2Int(x, y);
+        Vector2Int enemyPosition = new Vector2Int(humanPiece.x, humanPiece.y);
+
+        Move(position.x, position.y);
+
+        List<Tile> possibleMoves = humanPiece.GetPosibleMoves();
+
+        foreach (Tile move in possibleMoves)
+        {
+            humanPiece.Move(move.x, move.y);
+            bool requireChoice;
+            List<Piece> attacksPossibilities = humanPiece.GetAttackPossibilities(out requireChoice);
+            if (attacksPossibilities.Contains(this))
+            {
+                res += humanPiece.damage;
+                break;
+            }
+        }
+
+        Move(myPos.x, myPos.y);
+        humanPiece.Move(enemyPosition.x, enemyPosition.y);
+
+        return res;
+    }
+
+    int EstimateDamage(Tile position)
+    {
+        int res = 0;
+        foreach (HumanPiece humanPiece in HumanPiece.HumanPieces)
+            res += PossibleDamage(position, humanPiece);
+        return res;
     }
 }

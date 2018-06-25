@@ -85,7 +85,14 @@ public class Drone : AIPiece
         List<Piece> attackPosibilities = GetAttackPossibilities(out requireChoice);
 
         if (requireChoice)
-            throw new NotImplementedException();
+        {
+            Piece bestChoice = attackPosibilities[0];
+            if (attackPosibilities[1].y > attackPosibilities[0].y)
+                bestChoice = attackPosibilities[1];
+
+            attackPosibilities.Clear();
+            attackPosibilities.Add(bestChoice);
+        }
 
         if (attackPosibilities.Count == 1)
         {
