@@ -7,6 +7,8 @@ using UnityEngine.Playables;
 
 public class Game : MonoBehaviour {
 
+    public States.State currentState;
+
     enum Turn
     {
         HumanTurn,
@@ -80,9 +82,11 @@ public class Game : MonoBehaviour {
             }
         }
         inAnimation = false;
+
+        currentState = new States.Human.ActivePieces();
     }
 
-    Tile SelectedTile()
+    public Tile SelectedTile()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -98,7 +102,7 @@ public class Game : MonoBehaviour {
         return null;
     }
 
-    Piece SelectedPiece()
+    public Piece SelectedPiece()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -154,7 +158,7 @@ public class Game : MonoBehaviour {
         state = State.Move;
     }
 
-    void UnselectAllTiles()
+    public void UnselectAllTiles()
     {
         for (int i = 0; i < 8; ++i)
         {
@@ -299,7 +303,7 @@ public class Game : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (inAnimation)
+        /*if (inAnimation)
             return;
 
         if (turn == Turn.AITurn)
@@ -319,6 +323,8 @@ public class Game : MonoBehaviour {
             case State.Attack:
                 AttackStage();
                 break;
-        }
+        }*/
+
+        currentState.Update();
     }
 }

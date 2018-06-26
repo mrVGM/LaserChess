@@ -9,7 +9,12 @@ public class LazerAnimation : MonoBehaviour {
 
     public static LazerAnimation lazerAnimation;
 
-    public bool isAnimating;
+    public bool IsAnimating()
+    {
+        return isAnimating;
+    }
+
+    bool isAnimating;
     PlayableDirector pd;
 
 	// Use this for initialization
@@ -75,9 +80,6 @@ public class LazerAnimation : MonoBehaviour {
 
             foreach (GameObject beam in beams)
                 MonoBehaviour.Destroy(beam);
-
-            foreach (Piece p in targets)
-                p.TakeDamage(attacking.damage);
 
             return;
         }

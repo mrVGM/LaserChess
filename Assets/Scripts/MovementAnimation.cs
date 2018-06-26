@@ -14,6 +14,11 @@ public class MovementAnimation : MonoBehaviour {
     bool isAnimating;
     Piece pieceToAnimate;
 
+    public bool IsAnimating()
+    {
+        return isAnimating;
+    }
+
     public void AnimateMove(Piece piece, Vector3 location, Vector3 dest)
     {
         transform.position = new Vector3(0, 0, 0);
