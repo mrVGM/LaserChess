@@ -11,6 +11,8 @@ public class CommandUnit : AIPiece
     {
         damage = 0;
         hitPoints = 5;
+        maxHealth = 5;
+
         CommandUnits.Add(this);
     }
 

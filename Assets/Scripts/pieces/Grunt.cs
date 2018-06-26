@@ -10,6 +10,7 @@ class Grunt : HumanPiece
     {
         damage = 1;
         hitPoints = 2;
+        maxHealth = 2;
     }
 
     public override List<Piece> GetAttackPossibilities(out bool requireChoice)

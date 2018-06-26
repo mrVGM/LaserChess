@@ -10,6 +10,7 @@ public class Tank : HumanPiece
     {
         damage = 2;
         hitPoints = 4;
+        maxHealth = 4;
     }
 
     public override List<Piece> GetAttackPossibilities(out bool requireChoice)

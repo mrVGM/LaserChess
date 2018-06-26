@@ -10,6 +10,7 @@ public abstract class Piece
     public int x;
     public int y;
 
+    public int maxHealth;
     public int hitPoints;
     public int damage;
 
@@ -64,6 +65,8 @@ public abstract class Piece
     public void TakeDamage(int damage)
     {
         hitPoints -= damage;
+        float health = (float) hitPoints / maxHealth;
+        (monoBehaviour as HealthSetter).SetHealth(health);
         if (hitPoints <= 0)
             Destroy();
     }

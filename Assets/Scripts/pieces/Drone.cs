@@ -11,6 +11,8 @@ public class Drone : AIPiece
     {
         damage = 1;
         hitPoints = 2;
+        maxHealth = 2;
+
         Drones.Add(this);
     }
 

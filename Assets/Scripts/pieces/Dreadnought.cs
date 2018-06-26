@@ -12,6 +12,8 @@ public class Dreadnought : AIPiece
     {
         damage = 2;
         hitPoints = 5;
+        maxHealth = 5;
+
         Dreadnoughts.Add(this);
     }
 
