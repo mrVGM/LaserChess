@@ -19,6 +19,10 @@ public class CommandUnit : AIPiece
         Game.instance.pieces[x, y] = null;
         MonoBehaviour.Destroy(monoBehaviour.gameObject);
         CommandUnits.Remove(this);
+        if (CommandUnit.CommandUnits.Count == 0)
+        {
+            Game.instance.EndGame(Game.Winner.Human);
+        }
     }
 
     public override List<Piece> GetAttackPossibilities(out bool requireChoice)

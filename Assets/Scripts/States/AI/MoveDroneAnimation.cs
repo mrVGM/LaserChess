@@ -22,6 +22,12 @@ namespace States.AI
             if (MovementAnimation.movementAnimation.IsAnimating())
                 return;
 
+            if (drone.y == 0)
+            {
+                Game.instance.EndGame(Game.Winner.AI);
+                return;
+            }
+
             drone.active = false;
             Game.instance.currentState = new DroneAttack(drone);
         }

@@ -95,6 +95,11 @@ public abstract class HumanPiece : Piece
         Game.instance.pieces[x, y] = null;
         MonoBehaviour.Destroy(monoBehaviour.gameObject);
         HumanPieces.Remove(this);
+
+        if (HumanPieces.Count == 0)
+        {
+            Game.instance.EndGame(Game.Winner.AI);
+        }
     }
 
     public static Dictionary<HumanPiece, List<Tile>> ActivePieces()

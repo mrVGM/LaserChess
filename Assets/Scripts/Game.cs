@@ -109,4 +109,15 @@ public class Game : MonoBehaviour {
     void Update () {
         currentState.Update();
     }
+
+    public enum Winner
+    {
+        Human,
+        AI
+    };
+
+    public void EndGame(Winner winner)
+    {
+        throw new NotImplementedException();
+    }
 }
