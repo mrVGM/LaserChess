@@ -11,6 +11,7 @@ ModelImporter:
     100010: RightArm
     100012: RightLeg
     100014: Stamp
+    100016: default
     400000: //RootNode
     400002: Chest_Belly
     400004: Head
@@ -19,6 +20,7 @@ ModelImporter:
     400010: RightArm
     400012: RightLeg
     400014: Stamp
+    400016: default
     2100000: Chest_BellyMat
     2100002: HeadMat
     2100004: LeftArmMat
@@ -26,6 +28,7 @@ ModelImporter:
     2100008: RightArmMat
     2100010: RightLegMat
     2100012: StampMat
+    2100014: defaultMat
     2300000: Chest_Belly
     2300002: Head
     2300004: LeftArm
@@ -33,6 +36,7 @@ ModelImporter:
     2300008: RightArm
     2300010: RightLeg
     2300012: Stamp
+    2300014: default
     3300000: Chest_Belly
     3300002: Head
     3300004: LeftArm
@@ -40,6 +44,7 @@ ModelImporter:
     3300008: RightArm
     3300010: RightLeg
     3300012: Stamp
+    3300014: default
     4300000: Chest_Belly
     4300002: Head
     4300004: LeftArm
@@ -47,6 +52,7 @@ ModelImporter:
     4300008: RightArm
     4300010: RightLeg
     4300012: Stamp
+    4300014: default
   externalObjects: {}
   materials:
     importMaterials: 1

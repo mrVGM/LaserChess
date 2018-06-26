@@ -34,6 +34,7 @@ ModelImporter:
     100056: turretfront
     100058: turretside
     100060: turrettop
+    100062: default
     400000: Box07
     400002: Cylinder02
     400004: Duplicate61
@@ -65,6 +66,7 @@ ModelImporter:
     400056: turretfront
     400058: turretside
     400060: turrettop
+    400062: default
     2100000: Box07Mat
     2100002: Cylinder02Mat
     2100004: Duplicate61Mat
@@ -95,6 +97,7 @@ ModelImporter:
     2100054: turretfrontMat
     2100056: turretsideMat
     2100058: turrettopMat
+    2100060: defaultMat
     2300000: Box07
     2300002: Cylinder02
     2300004: Duplicate61
@@ -125,6 +128,7 @@ ModelImporter:
     2300054: turretfront
     2300056: turretside
     2300058: turrettop
+    2300060: default
     3300000: Box07
     3300002: Cylinder02
     3300004: Duplicate61
@@ -155,6 +159,7 @@ ModelImporter:
     3300054: turretfront
     3300056: turretside
     3300058: turrettop
+    3300060: default
     4300000: Box07
     4300002: Cylinder02
     4300004: Duplicate61
@@ -185,6 +190,7 @@ ModelImporter:
     4300054: turretfront
     4300056: turretside
     4300058: turrettop
+    4300060: default
   externalObjects: {}
   materials:
     importMaterials: 1
