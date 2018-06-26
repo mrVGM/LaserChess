@@ -11,7 +11,10 @@ namespace States.Human
         {
             Dictionary<HumanPiece, List<Tile>> active = HumanPiece.ActivePieces();
             if (active.Count == 0)
+            {
                 Game.instance.currentState = new AI.BeginTurn();
+                return;
+            }
 
             Game.instance.currentState = new SelectPiece(active);
         }

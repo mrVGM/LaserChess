@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace States.AI
+namespace States.Human
 {
     class BeginTurn : State
     {
         public void Update()
         {
-            Game.instance.SetAIPiecesActive();
-            Game.instance.currentState = new ChooseDrone();
+            Game.instance.SetHumanPiecesActive();
+            Game.instance.currentState = new ActivePieces();
         }
     }
 }

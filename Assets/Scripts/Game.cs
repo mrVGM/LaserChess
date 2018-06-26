@@ -83,7 +83,7 @@ public class Game : MonoBehaviour {
         }
         inAnimation = false;
 
-        currentState = new States.Human.ActivePieces();
+        currentState = new States.Human.BeginTurn();
     }
 
     public Tile SelectedTile()
@@ -285,7 +285,7 @@ public class Game : MonoBehaviour {
         }
     }
 
-    void SetAIPiecesActive()
+    public void SetAIPiecesActive()
     {
         foreach (Drone drone in Drone.Drones)
             drone.active = true;
@@ -295,7 +295,7 @@ public class Game : MonoBehaviour {
             commandUnit.active = true;
     }
 
-    void SetHumanPiecesActive()
+    public void SetHumanPiecesActive()
     {
         foreach (HumanPiece humanPiece in HumanPiece.HumanPieces)
             humanPiece.active = true;

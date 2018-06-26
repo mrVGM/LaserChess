@@ -5,12 +5,11 @@ using System.Text;
 
 namespace States.AI
 {
-    class BeginTurn : State
+    class ChooseDreadnought : State
     {
         public void Update()
         {
-            Game.instance.SetAIPiecesActive();
-            Game.instance.currentState = new ChooseDrone();
+            throw new NotImplementedException();
         }
     }
 }
