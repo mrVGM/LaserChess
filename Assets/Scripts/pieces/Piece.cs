@@ -67,10 +67,6 @@ public abstract class Piece
         if (hitPoints <= 0)
             Destroy();
     }
-    public void Attack(List<Piece> pieces)
-    {
-        LazerAnimation.lazerAnimation.Animate(this, pieces);
-    }
 
     public abstract List<Tile> GetPosibleMoves();
     public abstract List<Piece> GetAttackPossibilities(out bool requireChoice);
@@ -83,7 +79,6 @@ public abstract class AIPiece : Piece
     {
         type = Type.AI;
     }
-    public abstract bool MakeMoveAndAttack();
 }
 
 public abstract class HumanPiece : Piece

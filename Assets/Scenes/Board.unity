@@ -2375,7 +2375,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 52b1c474ea31d2c4ebb71f1056868f51, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -2792,7 +2792,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5708cc11789dc44f92b1305d3731eda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inAnimation: 0
 --- !u!4 &1267061057
 Transform:
   m_ObjectHideFlags: 0
@@ -3782,7 +3781,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9678cebe82d82b64b85d58f27b68e88d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAnimating: 0
 --- !u!95 &2071564262
 Animator:
   serializedVersion: 3

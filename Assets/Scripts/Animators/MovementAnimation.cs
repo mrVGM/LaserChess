@@ -28,7 +28,6 @@ public class MovementAnimation : MonoBehaviour {
         pieceToAnimate = piece;
 
         isAnimating = true;
-        Game.instance.inAnimation = true;
         pd.Play();
     }
 
@@ -47,7 +46,6 @@ public class MovementAnimation : MonoBehaviour {
         if (pd.state == PlayState.Paused)
         {
             isAnimating = false;
-            Game.instance.inAnimation = false;
             pieceToAnimate.monoBehaviour.transform.position = target;
             return;
         }

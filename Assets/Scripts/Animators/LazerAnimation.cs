@@ -64,7 +64,6 @@ public class LazerAnimation : MonoBehaviour {
         }
            
         isAnimating = true;
-        Game.instance.inAnimation = true;
         transform.position = new Vector3(0, 0, 0);
         pd.Play();
     }
@@ -76,7 +75,6 @@ public class LazerAnimation : MonoBehaviour {
         if (pd.state == PlayState.Paused)
         {
             isAnimating = false;
-            Game.instance.inAnimation = false;
 
             foreach (GameObject beam in beams)
                 MonoBehaviour.Destroy(beam);

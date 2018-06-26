@@ -68,36 +68,4 @@ public class Drone : AIPiece
             res.Add(Game.instance.board[x, y - 1]);
         return res;
     }
-
-    public override bool MakeMoveAndAttack()
-    {
-        if (!active)
-            return false;
-
-        List<Tile> moves = GetPosibleMoves();
-        if (moves.Count == 0)
-            return false;
-
-        Move(moves[0].x, moves[0].y);
-        active = false;
-
-        bool requireChoice;
-        List<Piece> attackPosibilities = GetAttackPossibilities(out requireChoice);
-
-        if (requireChoice)
-        {
-            Piece bestChoice = attackPosibilities[0];
-            if (attackPosibilities[1].y > attackPosibilities[0].y)
-                bestChoice = attackPosibilities[1];
-
-            attackPosibilities.Clear();
-            attackPosibilities.Add(bestChoice);
-        }
-
-        if (attackPosibilities.Count == 1)
-        {
-            Attack(attackPosibilities);
-        }
-        return true;
-    }
 }

@@ -37,40 +37,6 @@ public class CommandUnit : AIPiece
         return res;
     }
 
-    public override bool MakeMoveAndAttack()
-    {
-        if (!active)
-            return false;
-
-        List<Tile> moves = GetPosibleMoves();
-        if (moves.Count == 0)
-            return false;
-
-        active = false;
-        if (moves.Count > 1)
-        {
-            Vector2Int bestMove = new Vector2Int(x, y);
-            int minPossibleDamage = EstimateDamage(Game.instance.board[x, y]);
-
-            foreach (Tile move in moves)
-            {
-                int estimatedDamage = EstimateDamage(move);
-                if (estimatedDamage < minPossibleDamage)
-                {
-                    minPossibleDamage = estimatedDamage;
-                    bestMove.x = move.x;
-                    bestMove.y = move.y;
-                }
-            }
-
-            moves[0] = Game.instance.board[bestMove.x, bestMove.y];
-        }
-
-        if (moves[0].x != x || moves[0].y != y)
-            Move(moves[0].x, moves[0].y);
-        return true;
-    }
-
     int PossibleDamage(Tile position, HumanPiece humanPiece)
     {
         int res = 0;

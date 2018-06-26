@@ -9,55 +9,16 @@ public class Game : MonoBehaviour {
 
     public States.State currentState;
 
-    enum Turn
-    {
-        HumanTurn,
-        AITurn
-    }
-
-    enum State
-    {
-        SelectPiece,
-        Move,
-        Attack,
-
-        DroneMovement,
-        DreadnoughtMovement,
-        CommandUnitMovement
-    }
-
     public static Game instance;
 
     public Tile[,] board;
     public Piece[,] pieces;
-
-    Turn turn;
-    State state;
-    public bool inAnimation;
-
-    HumanPiece currentlySelected;
-
-    GameObject movementAnimator;
-    public GameObject MovementAnimator
-    {
-        get
-        {
-            if (movementAnimator == null)
-                movementAnimator = GameObject.Find("MovementAnimation");
-            return movementAnimator;
-        }
-    }
 
 	// Use this for initialization
 	void Start () {
         board = new Tile[8, 8];
         pieces = new Piece[8, 8];
         instance = this;
-
-        turn = Turn.HumanTurn;
-        state = State.SelectPiece;
-
-        currentlySelected = null;
 
         GameObject[] prefabs =
         {
@@ -81,7 +42,6 @@ public class Game : MonoBehaviour {
                 tmp.transform.Translate(new Vector3(j - 3.5f, 0.0f, i - 3.5f));
             }
         }
-        inAnimation = false;
 
         currentState = new States.Human.BeginTurn();
     }
@@ -117,47 +77,7 @@ public class Game : MonoBehaviour {
         }
         return null;
     }
-
-    void SelectPieceStage(HumanPiece piece = null)
-    {
-        Dictionary<HumanPiece, List<Tile>> active = HumanPiece.ActivePieces();
-        if (active.Count == 0)
-        {
-            SetAIPiecesActive();
-            turn = Turn.AITurn;
-            state = State.DroneMovement;
-            return;
-        }
-
-        currentlySelected = piece;
-        if (currentlySelected == null)
-            currentlySelected = SelectedPiece() as HumanPiece;
-
-        if (currentlySelected == null)
-            return;
-
-        List<Tile> possibleMoves = null;
-        try
-        {
-            possibleMoves = active[currentlySelected];
-        }
-        catch(Exception)
-        { }
-
-        if (possibleMoves == null)
-        {
-            currentlySelected = null;
-            return;
-        }
-
-        currentlySelected.Select();
-
-        foreach (Tile t in possibleMoves)
-            t.Select();
-
-        state = State.Move;
-    }
-
+    
     public void UnselectAllTiles()
     {
         for (int i = 0; i < 8; ++i)
@@ -168,123 +88,7 @@ public class Game : MonoBehaviour {
             }
         }
     }
-
-    void MoveStage()
-    {
-        if (currentlySelected == null)
-        {
-            state = State.SelectPiece;
-            return;
-        }
-        HumanPiece tmp = SelectedPiece() as HumanPiece;
-        if (tmp != null)
-        {
-            if (tmp == currentlySelected)
-            {
-                currentlySelected.Unselect();
-                currentlySelected = null;
-                UnselectAllTiles();
-                state = State.SelectPiece;
-            }
-            else
-            {
-                currentlySelected.Unselect();
-                currentlySelected = null;
-                UnselectAllTiles();
-                SelectPieceStage(tmp);
-            }
-            return;
-        }
-        Tile tile = SelectedTile();
-        if (tile == null || !tile.isSelected)
-            return;
-
-        UnselectAllTiles();
-        currentlySelected.Unselect();
-
-        currentlySelected.Move(tile.x, tile.y);
-        currentlySelected.active = false;
-
-        state = State.Attack;
-    }
-
-    void AttackStage()
-    {
-        bool requireChoice;
-        List<Piece> attackPosibilities = currentlySelected.GetAttackPossibilities(out requireChoice);
-
-        if (requireChoice)
-        {
-            foreach (Piece piece in attackPosibilities)
-                piece.Select();
-
-            AIPiece p = SelectedPiece() as AIPiece;
-            if (p == null || !p.isSelected)
-                return;
-
-            foreach (Piece piece in attackPosibilities)
-                piece.Unselect();
-
-            attackPosibilities.Clear();
-            attackPosibilities.Add(p);
-        }
-
-        currentlySelected.Attack(attackPosibilities);
-        currentlySelected.Unselect();
-        currentlySelected = null;
-        state = State.SelectPiece;
-    }
-
-    void AITurn()
-    {
-        bool inProgress = false;
-        switch (state)
-        {
-            case State.DroneMovement:
-                foreach (Drone drone in Drone.Drones)
-                {
-                    if (drone.MakeMoveAndAttack())
-                    {
-                        inProgress = true;
-                        break;
-                    }
-                }
-                if (!inProgress)
-                    state = State.DreadnoughtMovement;
-                break;
-
-            case State.DreadnoughtMovement:
-                foreach (Dreadnought dreadnought in Dreadnought.Dreadnoughts)
-                {
-                    if (dreadnought.MakeMoveAndAttack())
-                    {
-                        inProgress = true;
-                        break;
-                    }
-                }
-                if (!inProgress)
-                    state = State.CommandUnitMovement;
-                break;
-
-            case State.CommandUnitMovement:
-                foreach (CommandUnit commandUnit in CommandUnit.CommandUnits)
-                {
-                    if (commandUnit.MakeMoveAndAttack())
-                    {
-                        inProgress = true;
-                        break;
-                    }
-                }
-                if (!inProgress)
-                {
-                    SetHumanPiecesActive();
-                    turn = Turn.HumanTurn;
-                    state = State.SelectPiece;
-                }
-                break;
-        }
-    }
-
+    
     public void SetAIPiecesActive()
     {
         foreach (Drone drone in Drone.Drones)
@@ -303,28 +107,6 @@ public class Game : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        /*if (inAnimation)
-            return;
-
-        if (turn == Turn.AITurn)
-        {
-            AITurn();
-            return;
-        }
- 
-        switch (state)
-        {
-            case State.SelectPiece:
-                SelectPieceStage();
-                break;
-            case State.Move:
-                MoveStage();
-                break;
-            case State.Attack:
-                AttackStage();
-                break;
-        }*/
-
         currentState.Update();
     }
 }
