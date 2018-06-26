@@ -36,7 +36,7 @@ namespace States.AI
                     Game.instance.currentState = new ChooseDrone();
                     break;
                 case NextAction.ChooseDreadnought:
-                    throw new NotImplementedException();
+                    Game.instance.currentState = new ChooseDreadnought();
                     break;
                 case NextAction.ChooseCommandUnit:
                     throw new NotImplementedException();

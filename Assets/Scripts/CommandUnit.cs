@@ -100,7 +100,7 @@ public class CommandUnit : AIPiece
         return res;
     }
 
-    int EstimateDamage(Tile position)
+    public int EstimateDamage(Tile position)
     {
         int res = 0;
         foreach (HumanPiece humanPiece in HumanPiece.HumanPieces)

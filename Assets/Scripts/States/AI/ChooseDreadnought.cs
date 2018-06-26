@@ -9,7 +9,20 @@ namespace States.AI
     {
         public void Update()
         {
-            throw new NotImplementedException();
+            foreach (Dreadnought dreadnought in Dreadnought.Dreadnoughts)
+            {
+                if (dreadnought.active)
+                {
+                    List<Tile> possibleMoves = dreadnought.GetPosibleMoves();
+                    if (possibleMoves.Count > 0)
+                    {
+                        Game.instance.currentState = new MoveDreadnought(dreadnought, possibleMoves);
+                        return;
+                    }
+                }
+            }
+
+            Game.instance.currentState = new ChooseCommandUnit();
         }
     }
 }

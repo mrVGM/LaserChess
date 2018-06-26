@@ -68,7 +68,7 @@ public class Dreadnought : AIPiece
         return res;
     }
 
-    HumanPiece getNearestEnemy()
+    public HumanPiece getNearestEnemy()
     {
         double minDist = 1000;
         HumanPiece nearest = null;
