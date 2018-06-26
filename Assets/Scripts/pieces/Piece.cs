@@ -75,9 +75,30 @@ public abstract class Piece
 
 public abstract class AIPiece : Piece
 {
+    public static Material target = null;
+    public static Material AIMaterial = null;
+
     public AIPiece(MonoBehaviour mb) : base(mb)
     {
         type = Type.AI;
+    }
+
+    public override void Select()
+    {
+        if (target == null)
+            target = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/Target.mat");
+
+        monoBehaviour.transform.GetChild(1).GetComponent<Renderer>().material = target;
+        isSelected = true;
+    }
+
+    public override void Unselect()
+    {
+        if (AIMaterial == null)
+            AIMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/AIPiece.mat");
+
+        monoBehaviour.transform.GetChild(1).GetComponent<Renderer>().material = AIMaterial;
+        isSelected = false;
     }
 }
 
@@ -127,6 +148,7 @@ public abstract class HumanPiece : Piece
             highlighted = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/HumanPieceHighlighted.mat");
 
         monoBehaviour.transform.GetChild(1).GetComponent<Renderer>().material = highlighted;
+        isSelected = true;
     }
 
     public override void Unselect()
@@ -135,5 +157,6 @@ public abstract class HumanPiece : Piece
             ordinary = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/HumanPiece.mat");
 
         monoBehaviour.transform.GetChild(1).GetComponent<Renderer>().material = ordinary;
+        isSelected = false;
     }
 }
