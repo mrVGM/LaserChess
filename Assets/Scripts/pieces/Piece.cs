@@ -33,13 +33,13 @@ public abstract class Piece
         active = true;
     }
 
-    public void Select()
+    public virtual void Select()
     {
         if (!isSelected)
             monoBehaviour.transform.Translate(new Vector3(0.0f, 0.2f, 0.0f));
         isSelected = true;
     }
-    public void Unselect()
+    public virtual void Unselect()
     {
         if (isSelected)
             monoBehaviour.transform.Translate(new Vector3(0.0f, -0.2f, 0.0f));
@@ -84,6 +84,10 @@ public abstract class AIPiece : Piece
 public abstract class HumanPiece : Piece
 {
     public static HashSet<HumanPiece> HumanPieces = new HashSet<HumanPiece>();
+
+    public static Material ordinary = null;
+    public static Material highlighted = null;
+    
     public HumanPiece(MonoBehaviour mb) : base(mb)
     {
         type = Type.Human;
@@ -115,5 +119,21 @@ public abstract class HumanPiece : Piece
             }
         }
         return res;
+    }
+
+    public override void Select()
+    {
+        if (highlighted == null)
+            highlighted = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/HumanPieceHighlighted.mat");
+
+        monoBehaviour.transform.GetChild(1).GetComponent<Renderer>().material = highlighted;
+    }
+
+    public override void Unselect()
+    {
+        if (ordinary == null)
+            ordinary = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/HumanPiece.mat");
+
+        monoBehaviour.transform.GetChild(1).GetComponent<Renderer>().material = ordinary;
     }
 }
