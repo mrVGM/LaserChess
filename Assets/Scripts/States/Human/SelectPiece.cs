@@ -20,6 +20,8 @@ namespace States.Human
             if (current == null)
                 current = Game.instance.SelectedPiece() as HumanPiece;
 
+            if (current == null)
+                return;
 
             List<Tile> possibleMoves = null;
             try
@@ -34,6 +36,12 @@ namespace States.Human
                 current = null;
                 return;
             }
+
+            foreach (KeyValuePair<HumanPiece, List<Tile>> entry in active)
+            {
+                entry.Key.Unselect();
+            }
+
             current.Select();
             Game.instance.currentState = new Move(current, active);
         }

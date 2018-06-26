@@ -26,17 +26,11 @@ namespace States.Human
             HumanPiece piece = Game.instance.SelectedPiece() as HumanPiece;
             if (piece != null)
             {
-                if (piece == current)
-                {
-                    current.Unselect();
-                    Game.instance.currentState = new SelectPiece(active);
-                }
-                else
-                {
-                    Game.instance.currentState = new SelectPiece(active, piece);
-                }
-
                 Game.instance.UnselectAllTiles();
+                current.Unselect();
+
+                Game.instance.currentState = new ActivePieces();
+
                 return;
             }
 

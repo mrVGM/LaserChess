@@ -16,6 +16,11 @@ namespace States.Human
                 return;
             }
 
+            foreach (KeyValuePair<HumanPiece, List<Tile>> entry in active)
+            {
+                entry.Key.Select();
+            }
+
             Game.instance.currentState = new SelectPiece(active);
         }
     }
