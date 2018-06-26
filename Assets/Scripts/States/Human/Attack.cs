@@ -19,6 +19,12 @@ namespace States.Human
             bool requireChoice;
             List<Piece> attackPosibilities = piece.GetAttackPossibilities(out requireChoice);
 
+            if (attackPosibilities.Count == 0)
+            {
+                Game.instance.currentState = new ActivePieces();
+                return;
+            }
+
             List<AIPiece> AITargets = new List<AIPiece>();
             foreach (Piece p in attackPosibilities)
             {

@@ -56,12 +56,6 @@ public class LazerAnimation : MonoBehaviour {
             beams.Add(go);
             beamLengths.Add((float)(offset.magnitude - 0.3));
         }
-
-        if (beams.Count == 0)
-        {
-            foreach (Piece p in targets)
-                p.TakeDamage(attacking.damage);
-        }
            
         isAnimating = true;
         transform.position = new Vector3(0, 0, 0);
