@@ -66,13 +66,30 @@ public abstract class Piece
     {
         hitPoints -= damage;
         float health = (float) hitPoints / maxHealth;
-        (monoBehaviour as HealthSetter).SetHealth(health);
+        (monoBehaviour as HealthSetter).Health = health;
         if (hitPoints <= 0)
             Destroy();
     }
 
     public abstract List<Tile> GetPosibleMoves();
     public abstract List<Piece> GetAttackPossibilities(out bool requireChoice);
+
+    private Transform geometry;
+    protected Transform Geometry
+    {
+        get
+        {
+            if (geometry == null)
+            {
+                geometry = monoBehaviour.transform.Find("Model");
+            }
+            return geometry;
+        }
+        set
+        {
+            geometry = value;
+        }
+    }
 
 }
 
@@ -150,7 +167,7 @@ public abstract class HumanPiece : Piece
         if (highlighted == null)
             highlighted = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/HumanPieceHighlighted.mat");
 
-        monoBehaviour.transform.GetChild(1).GetComponent<Renderer>().material = highlighted;
+        Geometry.GetComponent<Renderer>().material = highlighted;
         isSelected = true;
     }
 
@@ -159,7 +176,7 @@ public abstract class HumanPiece : Piece
         if (ordinary == null)
             ordinary = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/HumanPiece.mat");
 
-        monoBehaviour.transform.GetChild(1).GetComponent<Renderer>().material = ordinary;
+        Geometry.GetComponent<Renderer>().material = ordinary;
         isSelected = false;
     }
 }

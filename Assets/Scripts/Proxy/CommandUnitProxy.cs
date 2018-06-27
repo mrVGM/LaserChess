@@ -3,7 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CommandUnitProxy : MonoBehaviour, HealthSetter {
-    public HealtBarManager healtBarManager { get; private set; }
+
+    public HealtBarManager healtBarManager;
+
+    public float Health
+    {
+        set
+        {
+            healtBarManager.Health = value;
+        }
+    }
 
     public void SetHealth(float health)
     {

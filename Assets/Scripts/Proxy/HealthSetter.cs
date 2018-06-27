@@ -6,6 +6,6 @@ using System.Text;
 
 interface HealthSetter
 {
-    void SetHealth(float health);
+    float Health { set; }
 }
 

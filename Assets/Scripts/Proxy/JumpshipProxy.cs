@@ -6,10 +6,15 @@ public class JumpshipProxy : MonoBehaviour, HealthSetter {
 
     public HealtBarManager healtBarManager;
 
-    public void SetHealth(float health)
+    public float Health
     {
-        healtBarManager.Health = health;
+        set
+        {
+            healtBarManager.Health = value;
+        }
     }
+
+
 
     // Use this for initialization
     void Start () {

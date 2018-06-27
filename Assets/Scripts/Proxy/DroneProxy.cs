@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DroneProxy : MonoBehaviour, HealthSetter {
-    public HealtBarManager healtBarManager { get; private set; }
 
-    public void SetHealth(float health)
+    public HealtBarManager healtBarManager;
+
+    public float Health
     {
-        healtBarManager.Health = health;
+        set
+        {
+            healtBarManager.Health = value;
+        }
     }
-
+    
     // Use this for initialization
     void Start () {
         Drone piece = new Drone(this);
