@@ -14,6 +14,8 @@ public class Game : MonoBehaviour {
     public Tile[,] board;
     public Piece[,] pieces;
 
+    public GameObject InfoPanel;
+
 	// Use this for initialization
 	void Start () {
         board = new Tile[8, 8];
