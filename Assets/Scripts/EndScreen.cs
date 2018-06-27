@@ -7,11 +7,13 @@ using UnityEngine.SceneManagement;
 public class EndScreen : MonoBehaviour {
 
     public Button playAgain, quit;
+    public Text text;
 
 	// Use this for initialization
 	void Start () {
         playAgain.onClick.AddListener(PlayAgin);
         quit.onClick.AddListener(Quit);
+        text.text = (GameSettings.winner == Game.Winner.Human) ? "You Win" : "You Lose";
 	}
 
     void PlayAgin()

@@ -40,6 +40,21 @@ public class Game : MonoBehaviour {
             AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AIPieces/CommandUnit.prefab"),
         };
 
+        int[,] configuration;
+
+        switch (GameSettings.level)
+        {
+            case 1:
+                configuration = GameSettings.level1Configuration;
+                break;
+            case 2:
+                configuration = GameSettings.level2Configuration;
+                break;
+            case 3:
+                configuration = GameSettings.level3Configuration;
+                break;
+        }
+
         for (int i = 0; i < 8; ++i)
         {
             for (int j = 0; j < 8; ++j)
@@ -131,5 +146,6 @@ public class Game : MonoBehaviour {
     {
         //throw new NotImplementedException();
         SceneManager.LoadScene("EndScreen");
+        GameSettings.winner = winner;
     }
 }
