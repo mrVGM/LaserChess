@@ -106,7 +106,7 @@ public abstract class AIPiece : Piece
     public override void Select()
     {
         if (target == null)
-            target = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/Target.mat");
+            target = Resources.Load<Material>("Materials/Target");
 
         monoBehaviour.transform.GetChild(1).GetComponent<Renderer>().material = target;
         isSelected = true;
@@ -115,7 +115,7 @@ public abstract class AIPiece : Piece
     public override void Unselect()
     {
         if (AIMaterial == null)
-            AIMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/AIPiece.mat");
+            AIMaterial = Resources.Load<Material>("Materials/AIPiece");
 
         monoBehaviour.transform.GetChild(1).GetComponent<Renderer>().material = AIMaterial;
         isSelected = false;
@@ -165,7 +165,7 @@ public abstract class HumanPiece : Piece
     public override void Select()
     {
         if (highlighted == null)
-            highlighted = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/HumanPieceHighlighted.mat");
+            highlighted = Resources.Load<Material>("Materials/HumanPieceHighlighted");
 
         Geometry.GetComponent<Renderer>().material = highlighted;
         isSelected = true;
@@ -174,7 +174,7 @@ public abstract class HumanPiece : Piece
     public override void Unselect()
     {
         if (ordinary == null)
-            ordinary = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/HumanPiece.mat");
+            ordinary = Resources.Load<Material>("Materials/HumanPiece");
 
         Geometry.GetComponent<Renderer>().material = ordinary;
         isSelected = false;

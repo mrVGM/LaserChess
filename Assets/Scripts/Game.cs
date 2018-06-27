@@ -32,12 +32,12 @@ public class Game : MonoBehaviour {
         GameObject[] prefabs =
         {
             null,
-            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/HumanPieces/Grunt.prefab"),
-            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/HumanPieces/Jumpship.prefab"),
-            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/HumanPieces/Tank.prefab"),
-            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AIPieces/Drone.prefab"),
-            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AIPieces/Dreadnought.prefab"),
-            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AIPieces/CommandUnit.prefab"),
+            Resources.Load<GameObject>("Prefabs/HumanPieces/Grunt"),
+            Resources.Load<GameObject>("Prefabs/HumanPieces/Jumpship"),
+            Resources.Load<GameObject>("Prefabs/HumanPieces/Tank"),
+            Resources.Load<GameObject>("Prefabs/AIPieces/Drone"),
+            Resources.Load<GameObject>("Prefabs/AIPieces/Dreadnought"),
+            Resources.Load<GameObject>("Prefabs/AIPieces/CommandUnit"),
         };
 
         int[,] configuration;

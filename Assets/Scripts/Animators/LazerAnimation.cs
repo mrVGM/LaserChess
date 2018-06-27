@@ -33,7 +33,7 @@ public class LazerAnimation : MonoBehaviour {
 
     public void Animate(Piece attacking, List<Piece> attacked)
     {
-        GameObject lazer = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Lazer.prefab");
+        GameObject lazer = Resources.Load<GameObject>("Prefabs/Lazer");
         beams.Clear();
         beamLengths.Clear();
         targets = attacked;
