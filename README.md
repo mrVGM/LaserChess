@@ -5,7 +5,7 @@ It is single player game, i.e. the player will face a simple AI agent as an oppo
 There are 3 levels of increasing difficulty.
 The difficulty is determined by the initial positions of the pieces on the board, which are predefined for each level.
 
-#Further improvements
+# Further improvements
 
 Some improvements the can be done are:
 * Adding sound effects and more animations
