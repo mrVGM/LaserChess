@@ -7,6 +7,6 @@ The difficulty is determined by the initial positions of the pieces on the board
 
 # Further improvements
 
-Some improvements the can be done are:
+Some improvements that can be done are:
 * Adding sound effects and more animations
 * Adding the ability for the players to position their pieces by themselves before the beginning of the game
