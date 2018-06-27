@@ -40,7 +40,7 @@ public class Game : MonoBehaviour {
             Resources.Load<GameObject>("Prefabs/AIPieces/CommandUnit"),
         };
 
-        int[,] configuration;
+        int[,] configuration = null;
 
         switch (GameSettings.level)
         {
@@ -59,7 +59,7 @@ public class Game : MonoBehaviour {
         {
             for (int j = 0; j < 8; ++j)
             {
-                GameObject current = prefabs[GameSettings.level1Configuration[7 - i, j]];
+                GameObject current = prefabs[configuration[7 - i, j]];
                 if (current == null)
                     continue;
                 GameObject tmp = Instantiate(current) as GameObject;
