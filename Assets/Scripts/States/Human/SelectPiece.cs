@@ -13,6 +13,13 @@ namespace States.Human
         {
             this.active = active;
             this.current = current;
+
+            if (current == null)
+            {
+                Game.instance.InfoPanel.SetActive(true);
+                InfoPanel infoPanel = Game.instance.InfoPanel.GetComponent<InfoPanel>();
+                infoPanel.InfoText.text = "Select piece to Move";
+            }
         }
 
         public void Update()

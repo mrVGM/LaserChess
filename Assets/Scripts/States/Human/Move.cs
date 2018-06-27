@@ -16,6 +16,9 @@ namespace States.Human
             this.current = current;
             this.active = active;
             moves = active[current];
+
+            InfoPanel infoPanel = Game.instance.InfoPanel.GetComponent<InfoPanel>();
+            infoPanel.InfoText.text = "Select a Tile to Move to";
         }
 
         public void Update()
@@ -46,6 +49,8 @@ namespace States.Human
 
             Game.instance.UnselectAllTiles();
             current.Unselect();
+
+            Game.instance.InfoPanel.SetActive(false);
 
             Game.instance.currentState = new MoveAnimation(current, new Vector2Int(tile.x, tile.y));
         }

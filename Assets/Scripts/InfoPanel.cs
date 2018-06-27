@@ -5,7 +5,18 @@ using UnityEngine.UI;
 
 public class InfoPanel : MonoBehaviour {
 
-    Text infoText;
+    private Text infoText;
+    public Text InfoText
+    {
+        get
+        {
+            if (infoText == null)
+            {
+                infoText = transform.Find("Info").GetComponent<Text>();
+            }
+            return infoText;
+        }
+    }
     Button finishYourTurn;
 
     void OnFinishTurn()
@@ -35,7 +46,6 @@ public class InfoPanel : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        infoText = transform.Find("Info").GetComponent<Text>();
         finishYourTurn = transform.Find("FinishTurn").GetComponent<Button>();
         finishYourTurn.onClick.AddListener(OnFinishTurn);
 	}

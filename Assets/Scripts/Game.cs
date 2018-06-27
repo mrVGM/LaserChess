@@ -45,6 +45,8 @@ public class Game : MonoBehaviour {
             }
         }
 
+        InfoPanel = GameObject.Find("Canvas").transform.Find("Panel").gameObject;
+
         currentState = new States.Human.BeginTurn();
     }
 

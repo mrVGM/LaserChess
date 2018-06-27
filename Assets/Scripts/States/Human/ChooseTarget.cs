@@ -17,6 +17,9 @@ namespace States.Human
 
             foreach (AIPiece piece in targets)
                 piece.Select();
+
+            Game.instance.InfoPanel.SetActive(true);
+            Game.instance.InfoPanel.GetComponent<InfoPanel>().InfoText.text = "Choose a Target to Attack";
         }
 
         public void Update()
@@ -31,6 +34,7 @@ namespace States.Human
             targets.Clear();
             targets.Add(p);
 
+            Game.instance.InfoPanel.SetActive(false);
             Game.instance.currentState = new AttackAnimation(attacking, targets);
         }
     }
