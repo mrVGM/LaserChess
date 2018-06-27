@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour {
 
@@ -16,8 +17,14 @@ public class Game : MonoBehaviour {
 
     public GameObject InfoPanel;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
+
+        HumanPiece.HumanPieces.Clear();
+        Drone.Drones.Clear();
+        Dreadnought.Dreadnoughts.Clear();
+        CommandUnit.CommandUnits.Clear();
+
         board = new Tile[8, 8];
         pieces = new Piece[8, 8];
         instance = this;
@@ -122,6 +129,7 @@ public class Game : MonoBehaviour {
 
     public void EndGame(Winner winner)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+        SceneManager.LoadScene("EndScreen");
     }
 }

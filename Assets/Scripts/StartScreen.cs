@@ -19,7 +19,7 @@ public class StartScreen : MonoBehaviour
     void StartGame()
     {
         GameSettings.level = level.value + 1;
-        SceneManager.LoadScene("EndScreen");
+        SceneManager.LoadScene("Board");
     }
 
     // Update is called once per frame
