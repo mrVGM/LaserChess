@@ -29,6 +29,12 @@ namespace States.Human
                 Game.instance.UnselectAllTiles();
                 current.Unselect();
 
+                if (active.ContainsKey(piece))
+                {
+                    Game.instance.currentState = new SelectPiece(active, piece);
+                    return;
+                }
+
                 Game.instance.currentState = new ActivePieces();
 
                 return;
